@@ -2,14 +2,8 @@ import { RootStateOrAny } from 'react-redux';
 import { IFocus } from './types/interfaces';
 
 const initialState = {
-  focuses: [
-    { id: 0, text: "Take Off", completed: true },
-    { id: 1, text: "Duck", completed: false },
-    { id: 2, text: "Turn", completed: false },
-  ],
-  filters: {
-    status: "All",
-  },
+  focuses: [] as IFocus[],
+  filter: "all",
 };
 function nextTodoId(focuses: IFocus[]) {
   const maxId = focuses.reduce((maxId, todo) => Math.max(todo.id, maxId), -1);
@@ -43,7 +37,7 @@ export default function appReducer(
     case "focuses/focusToggled":
       return {
         ...state,
-        focuses: state.focuses.map((f) => {
+        focuses: state.focuses.map((f: IFocus) => {
           if (f.id === action.payload) {
             return { ...f, completed: !f.completed };
           }
@@ -53,7 +47,7 @@ export default function appReducer(
     case "focuses/focusDeleted":
       return {
         ...state,
-        focuses: state.focuses.filter((f) => {
+        focuses: state.focuses.filter((f: IFocus) => {
           return f.id !== action.payload;
         }),
       };
