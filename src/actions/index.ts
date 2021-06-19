@@ -8,6 +8,7 @@ export const statusFilterChanged = (filter: string) => ({
 
 // Async actions
 export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
+  dispatch({ type: "focuses/fetchRequest" })
   return api.fetchFocuses().then(
     (response) =>
       dispatch({ type: "focuses/focusesLoaded", payload: response }),

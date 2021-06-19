@@ -3,6 +3,7 @@ import { IFocus } from './types/interfaces';
 
 const initialState = {
   focuses: [] as IFocus[],
+  isFetching: false,
   filter: "all",
 };
 
@@ -14,18 +15,15 @@ export default function appReducer(
   // The reducer normally looks at the action type field to decide what happens
   switch (action.type) {
     case "focuses/focusesLoaded":
-      console.log(action.payload)
       return {
         ...state,
         focuses: action.payload,
+        isFetching: false,
       };
     case "focuses/focusAdded":
       return {
         ...state,
-        focuses: [
-          ...state.focuses,
-          action.payload
-        ],
+        focuses: [...state.focuses, action.payload],
       };
     case "focuses/focusToggled":
       return {
@@ -44,7 +42,11 @@ export default function appReducer(
           return f.id !== action.payload;
         }),
       };
-
+    case "focuses/fetchRequest":
+      return {
+        ...state,
+        isFetching: true,
+      };
     case "filter/statusFilterChanged":
       return {
         ...state,
@@ -67,3 +69,4 @@ export const getAllFocuses = (state: RootStateOrAny, filter: string) => {
 };
 
 export const getCurrentFilter = (state: RootStateOrAny) => state.filter;
+export const getIsFetching = (state: RootStateOrAny) => state.isFetching;

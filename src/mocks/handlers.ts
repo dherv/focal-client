@@ -4,14 +4,19 @@ import { v4 } from 'node-uuid';
 
 export const handlers = [
   rest.get("/focuses", (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        { id: 0, text: "Take Off", completed: true },
-        { id: 1, text: "Duck", completed: false },
-        { id: 2, text: "Turn", completed: false },
-      ])
-    );
+    const cb = (resolve: any) =>
+      resolve(
+        res(
+          ctx.status(200),
+          ctx.json([
+            { id: 0, text: "Take Off", completed: true },
+            { id: 1, text: "Duck", completed: false },
+            { id: 2, text: "Turn", completed: false },
+          ])
+        )
+      );
+
+    return new Promise((resolve, reject) => setTimeout(() => cb(resolve), 500));
   }),
 
   rest.post("/focuses", (req, res, ctx) => {
