@@ -1,3 +1,6 @@
+import { RootStateOrAny } from 'react-redux';
+import * as api from '../api';
+
 export const addFocus = (text: string) => ({
   type: "focuses/focusAdded",
   payload: text,
@@ -15,5 +18,15 @@ export const deleteFocus = (focusId: number) => ({
 
 export const statusFilterChanged = (filter: string) => ({
   type: "filter/statusFilterChanged",
-  payload: filter
+  payload: filter,
 });
+
+// Async actions
+export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
+  console.log("here 1");
+  return api.fetchFocuses().then(
+    (response) =>
+      dispatch({ type: "focuses/focusesLoaded", payload: response }),
+    (error) => dispatch({ type: "focuses/focusesLoaded", payload: error })
+  );
+};

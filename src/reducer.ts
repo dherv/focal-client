@@ -17,6 +17,12 @@ export default function appReducer(
 ) {
   // The reducer normally looks at the action type field to decide what happens
   switch (action.type) {
+    case "focuses/focusesLoaded":
+      console.log(action.payload)
+      return {
+        ...state,
+        focuses: action.payload,
+      };
     case "focuses/focusAdded":
       return {
         // that has all the existing state data
