@@ -11,6 +11,7 @@ const FocusList: FC<{
   onFocusDelete: (id: number) => void;
   fetchFocuses: () => Promise<any>;
 }> = ({ focuses, onFocusClick, onFocusDelete, fetchFocuses }) => {
+  
   useEffect(() => {
     fetchFocuses();
   }, [fetchFocuses]);

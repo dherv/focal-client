@@ -5,10 +5,6 @@ const initialState = {
   focuses: [] as IFocus[],
   filter: "all",
 };
-function nextTodoId(focuses: IFocus[]) {
-  const maxId = focuses.reduce((maxId, todo) => Math.max(todo.id, maxId), -1);
-  return maxId + 1;
-}
 
 // Use the initialState as a default value
 export default function appReducer(
@@ -25,21 +21,12 @@ export default function appReducer(
       };
     case "focuses/focusAdded":
       return {
-        // that has all the existing state data
         ...state,
-        // but has a new array for the `todos` field
         focuses: [
-          // with all of the old todos
           ...state.focuses,
-          // and the new todo object
-          {
-            // Use an auto-incrementing numeric ID for this example
-            id: nextTodoId(state.focuses),
-            text: action.payload,
-            completed: false,
-          },
+          action.payload
         ],
-      }; // Do something here based on the different types of actions
+      };
     case "focuses/focusToggled":
       return {
         ...state,

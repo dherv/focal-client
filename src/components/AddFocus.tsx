@@ -11,7 +11,6 @@ const AddFocus: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     if(text) {
       dispatch(addFocus(text));
     }
-    
     input.value = "";
   };
   return (
