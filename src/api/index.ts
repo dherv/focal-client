@@ -1,3 +1,5 @@
+import { IFocus } from '../types/interfaces';
+
 export const fetchFocuses = () => {
   return fetch("/focuses", {
     headers: {
@@ -22,9 +24,10 @@ export const postFocus = (text: string) => {
   });
 };
 
-export const putFocus = (id: number) => {
-  return fetch(`/focuses/${id}`, {
+export const putFocus = (f: IFocus) => {
+  return fetch(`/focuses/${f.id}`, {
     method: "PUT",
+    body: JSON.stringify(f),
     headers: {
       "Content-type": "application/json",
     },

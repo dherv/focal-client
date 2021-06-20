@@ -1,5 +1,8 @@
+import { normalize } from 'normalizr';
 import { RootStateOrAny } from 'react-redux';
 import * as api from '../api';
+import { IFocus } from '../types/interfaces';
+import * as schema from './schema';
 
 export const statusFilterChanged = (filter: string) => ({
   type: "filter/statusFilterChanged",
@@ -8,10 +11,15 @@ export const statusFilterChanged = (filter: string) => ({
 
 // Async actions
 export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
-  dispatch({ type: "focuses/fetchRequest" })
+  dispatch({ type: "focuses/fetchRequest" });
+
   return api.fetchFocuses().then(
-    (response) =>
-      dispatch({ type: "focuses/focusesLoaded", payload: response }),
+    (response) => {
+      dispatch({
+        type: "focuses/focusesLoaded",
+        payload: normalize(response, schema.arrayOfFocuses),
+      });
+    },
     (error) => dispatch({ type: "focuses/focusesLoaded", payload: error })
   );
 };
@@ -19,11 +27,12 @@ export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
 export const addFocus =
   (text: string) => (dispatch: any, getState: RootStateOrAny) => {
     return api.postFocus(text).then(
-      (response) =>
+      (response) => {
         dispatch({
           type: "focuses/focusAdded",
-          payload: response,
-        }),
+          payload: normalize(response, schema.focus),
+        });
+      },
       (error) =>
         dispatch({
           type: "focuses/focusAdded",
@@ -49,17 +58,17 @@ export const deleteFocus =
   };
 
 export const toggleFocus =
-  (focusId: number) => (dispatch: any, getState: RootStateOrAny) => {
-    return api.putFocus(focusId).then(
+  (f: IFocus) => (dispatch: any, getState: RootStateOrAny) => {
+    return api.putFocus(f).then(
       (response) =>
         dispatch({
           type: "focuses/focusToggled",
-          payload: focusId,
+          payload: normalize(response, schema.focus),
         }),
       (error) =>
         dispatch({
           type: "focuses/focusToggled",
-          payload: focusId,
+          payload: normalize(error, schema.focus),
         })
     );
   };

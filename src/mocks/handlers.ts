@@ -28,11 +28,11 @@ export const handlers = [
   }),
 
   rest.put("/focuses/:focusId", (req, res, ctx) => {
-    const id = req.params.focusId;
+    const id = Number(req.params.focusId);
     const body = req.body as any;
     return res(
       ctx.status(200),
-      ctx.json({ id, text: body.text, completed: true })
+      ctx.json({ id, text: body.text, completed: !body.completed })
     );
   }),
 

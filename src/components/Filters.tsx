@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { connect, RootStateOrAny } from 'react-redux';
 import { Dispatch } from 'redux';
 import { statusFilterChanged } from '../actions';
-import { getCurrentFilter } from '../reducer';
+import { getCurrentFilter } from '../reducers';
 import { Filter } from './Filter';
 
 export const Filters: FC<{ dispatch: Dispatch; currentFilter: string }> = ({
