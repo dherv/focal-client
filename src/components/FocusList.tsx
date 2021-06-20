@@ -1,12 +1,16 @@
 import { FC, useEffect } from 'react';
 import { connect, RootStateOrAny } from 'react-redux';
-import { deleteFocus, fetchFocuses, toggleFocus } from '../actions';
+import {
+  deleteFocus,
+  fetchFocuses,
+  toggleFocus,
+} from '../features/focus/focusActions';
 import {
   getAllFocuses,
   getCurrentFilter,
   getErrorMessage,
   getIsFetching,
-} from '../reducers';
+} from '../features/focus/focusReducer';
 import { IFocus } from '../types/interfaces';
 import { Focus } from './Focus';
 
@@ -15,7 +19,7 @@ const FocusList: FC<{
   isFetching: boolean;
   errorMessage: string;
   onFocusClick: (f: IFocus) => void;
-  onFocusDelete: (id: number) => void;
+  onFocusDelete: (id: string) => void;
   fetchFocuses: () => Promise<any>;
 }> = ({ focuses, onFocusClick, onFocusDelete, fetchFocuses, isFetching, errorMessage }) => {
   useEffect(() => {
@@ -57,7 +61,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchFocuses: () => dispatch(fetchFocuses),
     onFocusClick: (f: IFocus) => dispatch(toggleFocus(f)),
-    onFocusDelete: (id: number) => dispatch(deleteFocus(id)),
+    onFocusDelete: (id: string) => dispatch(deleteFocus(id)),
   };
 };
 

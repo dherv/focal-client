@@ -1,8 +1,8 @@
 import { normalize } from 'normalizr';
 import { RootStateOrAny } from 'react-redux';
-import * as api from '../api';
-import { IFocus } from '../types/interfaces';
-import * as schema from './schema';
+import { IFocus } from '../../types/interfaces';
+import * as api from './focusApi';
+import * as schema from './focusSchema';
 
 export const statusFilterChanged = (filter: string) => ({
   type: "filter/statusFilterChanged",
@@ -40,7 +40,7 @@ export const addFocus =
   };
 
 export const deleteFocus =
-  (id: number) => (dispatch: any, getState: RootStateOrAny) => {
+  (id: string) => (dispatch: any, getState: RootStateOrAny) => {
     return api.deleteFocus(id).then(
       (response) =>
         dispatch({

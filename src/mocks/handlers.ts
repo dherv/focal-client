@@ -14,9 +14,9 @@ export const handlers = [
       ctx.status(200),
       ctx.delay(1000),
       ctx.json([
-        { id: 0, text: "Take Off", completed: true },
-        { id: 1, text: "Duck", completed: false },
-        { id: 2, text: "Turn", completed: false },
+        { id: v4(), text: "Take Off", completed: true },
+        { id: v4(), text: "Duck", completed: false },
+        { id: v4(), text: "Turn", completed: false },
       ])
     );
   }),
@@ -30,7 +30,7 @@ export const handlers = [
   }),
 
   rest.put("/focuses/:focusId", (req, res, ctx) => {
-    const id = Number(req.params.focusId);
+    const id = req.params.focusId;
     const body = req.body as any;
     return res(
       ctx.status(200),

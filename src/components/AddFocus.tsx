@@ -1,6 +1,6 @@
 import { Dispatch, FC } from 'react';
 import { connect } from 'react-redux';
-import { addFocus } from '../actions';
+import { addFocus } from '../features/focus/focusActions';
 
 const AddFocus: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   let input: HTMLInputElement;
