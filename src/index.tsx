@@ -1,21 +1,18 @@
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import App from './App';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser')
-  worker.start()
+if (process.env.NODE_ENV === "development") {
+  const { worker } = require("./mocks/browser");
+  worker.start();
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <App store={store} />
   </React.StrictMode>,
   document.getElementById("root")
 );

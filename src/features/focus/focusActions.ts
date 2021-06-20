@@ -15,7 +15,6 @@ export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
 
   return api.fetchFocuses().then(
     (response) => {
-      console.log({ response });
       dispatch({
         type: "focuses/focusesLoaded",
         payload: normalize(response, schema.arrayOfFocuses),

@@ -20,6 +20,7 @@ const byId = (state = {} as any, action: { type: string; payload: any }) => {
     case "focuses/focusesLoaded":
     case "focuses/focusAdded":
     case "focuses/focusToggled":
+      console.log("focus loaded", action.type)
       return {
         ...state,
         ...action.payload.entities.focuses,

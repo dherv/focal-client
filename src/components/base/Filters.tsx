@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { connect, RootStateOrAny } from 'react-redux';
 import { Dispatch } from 'redux';
-import { statusFilterChanged } from '../features/focus/focusActions';
-import { getCurrentFilter } from '../features/focus/focusReducer';
+import { statusFilterChanged } from '../../features/focus/focusActions';
+import { getCurrentFilter } from '../../features/focus/focusReducer';
 import { Filter } from './Filter';
 
 export const Filters: FC<{ dispatch: Dispatch; currentFilter: string }> = ({

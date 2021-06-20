@@ -5,8 +5,9 @@ export interface IFocus {
 }
 
 export interface ISession {
-  id: string;
+  id?: string;
   memo: string;
   rating: number;
+  date?: Date
   focusId: number;
 }

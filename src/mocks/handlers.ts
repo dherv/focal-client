@@ -4,12 +4,12 @@ import { v4 } from 'node-uuid';
 
 export const handlers = [
   rest.get("/focuses", (req, res, ctx) => {
-    if (Math.random() > 0.5) {
-      return res(
-        ctx.status(500),
-        ctx.json({ message: "Internal Server Error" })
-      );
-    }
+    // if (Math.random() > 0.5) {
+    //   return res(
+    //     ctx.status(500),
+    //     ctx.json({ message: "Internal Server Error" })
+    //   );
+    // }
     return res(
       ctx.status(200),
       ctx.delay(1000),

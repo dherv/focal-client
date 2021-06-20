@@ -8,10 +8,10 @@ export const Focus: FC<{
   onDelete: () => void
 }> = ({ text, completed, onClick, onDelete }) => {
   return (
-    <li className="flex justify-between items-center mb-2 text-sm text-gray-600 ">
+    <li className="list-item">
       <div
+        className="list-item-content"
         onClick={onClick}
-        className="rounded flex flex-grow justify-between cursor-pointer hover:bg-indigo-100 bg-white shadow-md p-2 select-none"
       >
         <p>{text}</p>
         {completed ? (
