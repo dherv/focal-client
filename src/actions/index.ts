@@ -15,12 +15,13 @@ export const fetchFocuses = (dispatch: any, getState: RootStateOrAny) => {
 
   return api.fetchFocuses().then(
     (response) => {
+      console.log({ response });
       dispatch({
         type: "focuses/focusesLoaded",
         payload: normalize(response, schema.arrayOfFocuses),
       });
     },
-    (error) => dispatch({ type: "focuses/focusesLoaded", payload: error })
+    (error) => dispatch({ type: "focuses/fetchError", payload: error.message })
   );
 };
 
@@ -34,10 +35,7 @@ export const addFocus =
         });
       },
       (error) =>
-        dispatch({
-          type: "focuses/focusAdded",
-          payload: error,
-        })
+        dispatch({ type: "focuses/fetchError", payload: error.message })
     );
   };
 
@@ -50,10 +48,7 @@ export const deleteFocus =
           payload: id,
         }),
       (error) =>
-        dispatch({
-          type: "focuses/focusDeleted",
-          payload: id,
-        })
+        dispatch({ type: "focuses/fetchError", payload: error.message })
     );
   };
 
@@ -66,9 +61,6 @@ export const toggleFocus =
           payload: normalize(response, schema.focus),
         }),
       (error) =>
-        dispatch({
-          type: "focuses/focusToggled",
-          payload: normalize(error, schema.focus),
-        })
+        dispatch({ type: "focuses/fetchError", payload: error.message })
     );
   };

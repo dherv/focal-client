@@ -4,19 +4,21 @@ import { v4 } from 'node-uuid';
 
 export const handlers = [
   rest.get("/focuses", (req, res, ctx) => {
-    const cb = (resolve: any) =>
-      resolve(
-        res(
-          ctx.status(200),
-          ctx.json([
-            { id: 0, text: "Take Off", completed: true },
-            { id: 1, text: "Duck", completed: false },
-            { id: 2, text: "Turn", completed: false },
-          ])
-        )
+    if (Math.random() > 0.5) {
+      return res(
+        ctx.status(500),
+        ctx.json({ message: "Internal Server Error" })
       );
-
-    return new Promise((resolve, reject) => setTimeout(() => cb(resolve), 500));
+    }
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json([
+        { id: 0, text: "Take Off", completed: true },
+        { id: 1, text: "Duck", completed: false },
+        { id: 2, text: "Turn", completed: false },
+      ])
+    );
   }),
 
   rest.post("/focuses", (req, res, ctx) => {

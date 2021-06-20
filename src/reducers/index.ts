@@ -45,8 +45,21 @@ const isFetching = (state = false, action: { type: string; payload: any }) => {
   switch (action.type) {
     case "focuses/fetchRequest":
       return true;
+    case "focuses/fetchError":
     case "focuses/focusesLoaded":
-        return false;
+      return false;
+    default:
+      return state;
+  }
+};
+
+const errorMessage = (state = null, action: { type: string; payload: any }) => {
+  switch (action.type) {
+    case "focuses/fetchError":
+      return action.payload;
+    case "focuses/fetchRequest":
+    case "focuses/focusesLoaded":
+      return null;
     default:
       return state;
   }
@@ -57,6 +70,7 @@ const focus = combineReducers({
   result,
   filter,
   isFetching,
+  errorMessage,
 });
 const appReducer = combineReducers({
   focus,
@@ -76,3 +90,5 @@ export const getAllFocuses = (state: RootStateOrAny, filter: string) => {
 
 export const getCurrentFilter = (state: RootStateOrAny) => state.focus.filter;
 export const getIsFetching = (state: RootStateOrAny) => state.focus.isFetching;
+export const getErrorMessage = (state: RootStateOrAny) =>
+  state.focus.errorMessage;

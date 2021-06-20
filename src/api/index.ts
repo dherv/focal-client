@@ -7,7 +7,11 @@ export const fetchFocuses = () => {
     },
   }).then((response) => {
     if (response.ok) return response.json();
-    return response;
+    if (!response.ok) {
+      return response.json().then((json) => {
+        throw json;
+      });
+    }
   });
 };
 
@@ -20,7 +24,11 @@ export const postFocus = (text: string) => {
     },
   }).then((response) => {
     if (response.ok) return response.json();
-    return response;
+    if (!response.ok) {
+      return response.json().then((json) => {
+        throw json;
+      });
+    }
   });
 };
 
@@ -33,7 +41,11 @@ export const putFocus = (f: IFocus) => {
     },
   }).then((response) => {
     if (response.ok) return response.json();
-    return response;
+    if (!response.ok) {
+      return response.json().then((json) => {
+        throw json;
+      });
+    }
   });
 };
 
@@ -45,6 +57,10 @@ export const deleteFocus = (id: number) => {
     },
   }).then((response) => {
     if (response.ok) return response.json();
-    return response;
+    if (!response.ok) {
+      return response.json().then((json) => {
+        throw json;
+      });
+    }
   });
 };
