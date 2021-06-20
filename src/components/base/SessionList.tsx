@@ -1,15 +1,28 @@
 import { FC } from 'react';
+import { connect, RootStateOrAny } from 'react-redux';
+import { getAllSessions } from '../../features/session/sessionReducer';
+import { ISessionEntity } from '../../types/interfaces';
 import { Session } from './Session';
 
-export const SessionList: FC = () => {
+const SessionList: FC<{ sessions: ISessionEntity[] }> = ({ sessions }) => {
   return (
     <ul>
-      <Session
-        memo="memo"
-        rating={1}
-        date="2021/07/01"
-        focusName="take off"
-      ></Session>
+      {sessions.map(({id, memo, rating, focus}) => (
+        <Session
+        key={id}
+          memo={memo}
+          rating={rating}
+          date="2021/07/01"
+          focusName={focus.text}
+        />
+      ))}
     </ul>
   );
 };
+
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    sessions: getAllSessions(state),
+  };
+};
+export default connect(mapStateToProps)(SessionList);

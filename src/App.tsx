@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AppFetcher from './AppFetcher';
 import PageFocus from './components/pages/PageFocus';
 import PageSession from './components/pages/PageSession';
 import { TemplateApp } from './components/templates/TemplateApp';
@@ -7,6 +8,7 @@ import { TemplateApp } from './components/templates/TemplateApp';
 export const App = ({ store }: { store: any }) => {
   return (
     <Provider store={store}>
+      <AppFetcher />
       <Router>
         <Switch>
           <TemplateApp>

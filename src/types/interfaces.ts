@@ -8,6 +8,10 @@ export interface ISession {
   id?: string;
   memo: string;
   rating: number;
+  focusId: string;
   date?: Date
-  focusId: number;
+}
+
+export interface ISessionEntity extends ISession {
+  focus: IFocus
 }

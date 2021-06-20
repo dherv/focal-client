@@ -1,13 +1,9 @@
-import { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchFocuses } from '../../features/focus/focusActions';
+import { FC } from 'react';
 import AddSession from '../base/SessionAdd';
-import { SessionList } from '../base/SessionList';
+import SessionList from '../base/SessionList';
 
- const PageSession : FC<{ fetchFocuses: () => Promise<any>;}> = ({fetchFocuses}) => {
-  useEffect(() => {
-    fetchFocuses();
-  }, [fetchFocuses]);
+ const PageSession : FC = () => {
+
   return (
     <section>
       <h4 className="text-sm font-thin mb-2">add a session</h4>
@@ -20,10 +16,4 @@ import { SessionList } from '../base/SessionList';
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    fetchFocuses: () => dispatch(fetchFocuses)
-  };
-};
-
-export default connect(null,mapDispatchToProps)(PageSession)
+export default PageSession

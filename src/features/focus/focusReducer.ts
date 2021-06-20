@@ -20,7 +20,6 @@ const byId = (state = {} as any, action: { type: string; payload: any }) => {
     case "focuses/focusesLoaded":
     case "focuses/focusAdded":
     case "focuses/focusToggled":
-      console.log("focus loaded", action.type)
       return {
         ...state,
         ...action.payload.entities.focuses,
@@ -42,6 +41,7 @@ const filter = (state = "all", action: { type: string; payload: any }) => {
       return state;
   }
 };
+
 const isFetching = (state = false, action: { type: string; payload: any }) => {
   switch (action.type) {
     case "focuses/fetchRequest":
@@ -65,7 +65,7 @@ const errorMessage = (state = null, action: { type: string; payload: any }) => {
       return state;
   }
 };
-// Use the initialState as a default value
+
  const focusReducer = combineReducers({
   byId,
   result,
@@ -79,7 +79,6 @@ export default focusReducer
 export const getAllFocuses = (state: RootStateOrAny, filter: string) => {
   const ids = state.focus.result;
   const entities = ids.map((id: number) => state.focus.byId[id]);
-
   if (filter === "all") return entities;
   if (filter === "completed")
     return entities.filter((f: IFocus) => f.completed);

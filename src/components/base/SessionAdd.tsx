@@ -9,7 +9,7 @@ import { TextInput } from './TextInput';
 const initialState = {
   memo: "",
   rating: 1,
-  focusId: null,
+  focusId: undefined,
 };
 
 const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
@@ -17,7 +17,7 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
   focuses,
 }) => {
   const [state, setState] =
-    useState<{ memo: string; rating: number; focusId: number | null }>(
+    useState<{ memo: string; rating: number; focusId: string | undefined }>(
       initialState
     );
 
@@ -35,6 +35,7 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const { memo, rating, focusId } = state;
+    console.log(memo, rating, focusId);
     if (memo && rating && focusId) {
       dispatch(addSession({ memo, rating, focusId }));
     }
@@ -71,6 +72,7 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
           onChange={handleChange}
           name="focusId"
         >
+          <option value={undefined}>Please choose a focus</option>
           {focuses.map((focus) => (
             <option key={focus.id} value={focus.id}>
               {focus.text}

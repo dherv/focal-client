@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { CheckIcon, ClockIcon, XCircleIcon } from '@heroicons/react/solid';
 
 export const Session: FC<{
   memo: string;
@@ -10,9 +9,9 @@ export const Session: FC<{
   return (
     <li className="list-item">
       <div
-        className="list-item-content"
+        className="list-item-content flex-wrap"
       >
-        <p>{memo}</p>
+        <p className="w-full mb-2">{memo}</p>
         <p>{rating}</p>
         <p>{date}</p>
         <p>{focusName}</p>
