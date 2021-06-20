@@ -1,5 +1,6 @@
 import { RootStateOrAny } from 'react-redux';
 import { combineReducers } from 'redux';
+import { ISessionEntity } from '../../types/interfaces';
 
 const result = (
   state: RootStateOrAny = [],
@@ -44,7 +45,8 @@ export const getAllSessions = (state: RootStateOrAny) => {
   const entities = ids.map((id: number) => ({
     ...state.session.entities[id],
     focus: focuses[state.session.entities[id].focusId],
-  }));
+  })).filter((s: ISessionEntity) => s.focus)
 
+  console.log(entities)
   return entities;
 };
