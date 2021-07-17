@@ -71,4 +71,37 @@ const sessionHandlers = [
   }),
 ];
 
-export const handlers = [...focusHandlers, ...sessionHandlers];
+
+const spotHandlers = [
+  rest.get("/spots", (req, res, ctx) => {
+    // return res(
+    //   ctx.status(500),
+    //   ctx.json({ message: "Internal Server Error" })
+    // );
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json([
+        { id: v4(), name: "Beach 1", latitude: 35.2, longitude: 34.2 },
+        { id: v4(), name: "Beach 2", latitude: 35.2, longitude: 34.2 },
+        { id: v4(), name: "Beach 3", latitude: 35.2, longitude: 34.2 },
+      ])
+    );
+    
+  }),
+
+  rest.post("/spots", (req, res, ctx) => {
+    const body = req.body as any;
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: v4(),
+        name: body.name,
+        latitude: 35.5,
+        longitude: 136.6,
+      })
+    );
+  }),
+];
+
+export const handlers = [...focusHandlers, ...sessionHandlers, ...spotHandlers];
