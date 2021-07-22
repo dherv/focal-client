@@ -1,6 +1,57 @@
 // src/mocks/handlers.js
-import { graphql, rest } from 'msw';
+import { graphql } from 'msw';
 import { v4 } from 'node-uuid';
+
+let spots = [
+  {
+    id: "1",
+    name: "Beach 1",
+    latitude: 35.2,
+    longitude: 34.2,
+  },
+  {
+    id: "2",
+    name: "Beach 2",
+    latitude: 35.2,
+    longitude: 34.2,
+  },
+  {
+    id: "3",
+    name: "Beach 3",
+    latitude: 35.2,
+    longitude: 34.2,
+  },
+];
+
+let focuses = [
+  { id: "1", name: "Take Off", completed: true },
+  { id: "2", name: "Duck", completed: false },
+  { id: "3", name: "Turn", completed: false },
+];
+
+let sessions = [
+  {
+    id: v4(),
+    memo: "Good session",
+    rating: 4,
+    focus: focuses[0],
+    spot: spots[0],
+  },
+  {
+    id: v4(),
+    memo: "Cool wind",
+    rating: 4,
+    focus: focuses[0],
+    spot: spots[0],
+  },
+  {
+    id: v4(),
+    memo: "bwa",
+    rating: 4,
+    focus: focuses[0],
+    spot: spots[0],
+  },
+];
 
 const authHandlers = [
   graphql.mutation("SignUp", (req, res, ctx) => {
@@ -26,103 +77,92 @@ const authHandlers = [
   }),
 ];
 const focusHandlers = [
-  rest.get("/focuses", (req, res, ctx) => {
+  graphql.query("FetchFocuses", (req, res, ctx) => {
     return res(
-      ctx.status(200),
-      ctx.delay(1000),
-      ctx.json([
-        { id: "1", text: "Take Off", completed: true },
-        { id: "2", text: "Duck", completed: false },
-        { id: "3", text: "Turn", completed: false },
-      ])
+      ctx.data({
+        focuses,
+      })
     );
   }),
 
-  rest.post("/focuses", (req, res, ctx) => {
+  graphql.mutation("AddFocus", (req, res, ctx) => {
     const body = req.body as any;
+    const newFocus = { id: v4(), name: body.variables.name, completed: false };
+    focuses = [...focuses, newFocus];
     return res(
-      ctx.status(200),
-      ctx.json({ id: v4(), text: body.text, completed: false })
+      ctx.data({
+        focus: newFocus,
+      })
     );
   }),
 
-  rest.put("/focuses/:focusId", (req, res, ctx) => {
-    const id = req.params.focusId;
-    const body = req.body as any;
+  graphql.mutation("UpdateFocus", (req, res, ctx) => {
+    const { id, name, completed } = req.body?.variables as any;
+    const toggleCompleted = !completed;
+    console.log(id, completed, toggleCompleted);
     return res(
-      ctx.status(200),
-      ctx.json({ id, text: body.text, completed: !body.completed })
+      ctx.data({
+        updateFocus: { id, name, completed: toggleCompleted },
+      })
     );
   }),
 
-  rest.delete("/focuses/:focusId", (req, res, ctx) => {
-    const id = req.params.focusId;
-    return res(ctx.status(200), ctx.json({ id }));
+  graphql.mutation("DeleteFocus", (req, res, ctx) => {
+    const { id, name, completed } = req.body?.variables as any;
+    return res(
+      ctx.data({
+        deleteFocus: { id, name, completed },
+      })
+    );
   }),
 ];
 
 const sessionHandlers = [
-  rest.get("/sessions", (req, res, ctx) => {
-    // if (Math.random() > 0.5) {
-    //   return res(
-    //     ctx.status(500),
-    //     ctx.json({ message: "Internal Server Error" })
-    //   );
-    // }
+  graphql.query("FetchSessions", (req, res, ctx) => {
     return res(
-      ctx.status(200),
-      ctx.delay(1000),
-      ctx.json([
-        { id: v4(), memo: "Good session", rating: 4, focusId: "1" },
-        { id: v4(), memo: "Cool wind", rating: 4, focusId: "1" },
-        { id: v4(), memo: "bwa", rating: 4, focusId: "1" },
-      ])
+      ctx.data({
+        sessions,
+      })
     );
   }),
 
-  rest.post("/sessions", (req, res, ctx) => {
-    const body = req.body as any;
+  graphql.mutation("AddSession", (req, res, ctx) => {
+    const body = req.body?.variables as any;
+    const focus = focuses.find((f) => f.id === body.focusId);
+    const spot = spots.find((s) => s.id === body.spotId);
     return res(
-      ctx.status(200),
-      ctx.json({
-        id: v4(),
-        memo: body.memo,
-        rating: body.rating,
-        focusId: body.focusId,
-        spotId: body.spotId,
+      ctx.data({
+        session: {
+          id: v4(),
+          memo: body.memo,
+          rating: body.rating,
+          focus,
+          spot,
+        },
       })
     );
   }),
 ];
 
 const spotHandlers = [
-  rest.get("/spots", (req, res, ctx) => {
-    // return res(
-    //   ctx.status(500),
-    //   ctx.json({ message: "Internal Server Error" })
-    // );
+  graphql.query("FetchSpots", (req, res, ctx) => {
     return res(
-      ctx.status(200),
-      ctx.delay(1000),
-      ctx.json([
-        { id: v4(), name: "Beach 1", latitude: 35.2, longitude: 34.2 },
-        { id: v4(), name: "Beach 2", latitude: 35.2, longitude: 34.2 },
-        { id: v4(), name: "Beach 3", latitude: 35.2, longitude: 34.2 },
-      ])
+      ctx.data({
+        spots,
+      })
     );
   }),
 
-  rest.post("/spots", (req, res, ctx) => {
-    const body = req.body as any;
-    return res(
-      ctx.status(200),
-      ctx.json({
-        id: v4(),
-        name: body.name,
-        latitude: 35.5,
-        longitude: 136.6,
-      })
-    );
+  graphql.mutation("AddSpot", (req, res, ctx) => {
+    const body = req.body?.variables as any;
+    const newSpot = {
+      id: body.id,
+      name: body.name,
+      latitude: 35.5,
+      longitude: 136.6,
+    };
+    spots = [...spots, newSpot];
+    return res(ctx.data(newSpot));
   }),
 ];
 

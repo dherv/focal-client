@@ -1,8 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION, SIGNUP_MUTATION } from '../../graphql/mutations';
 import { TemplateAuth } from '../templates/TemplateAuth';
 
 const initialState = {
@@ -17,7 +15,6 @@ export const PageAuth: FC = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log(history, formState.login);
     const { name, email, password } = formState;
     formState.login
       ? dispatch({

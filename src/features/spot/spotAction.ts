@@ -1,25 +1,7 @@
-import { RootStateOrAny } from 'react-redux';
-import { ISpot } from '../../types/interfaces';
-import * as api from './spotApi';
+export const FETCH_SPOTS_REQUEST = "spots/fetchSpotsRequest";
+export const FETCH_SPOTS_SUCCESS = "spots/fetchSpotsSuccess";
+export const FETCH_SPOTS_FAILURE = "spots/fetchSpotsFailure";
 
-// export const fetchSpots = (dispatch: any, getState: RootStateOrAny) => {
-//   dispatch({ type: "spots/fetchSpots", payload: response });
-//   // return api.fetchSpots().then(
-//   //   (response) => dispatch({ type: "spots/fetchSpots", payload: response }),
-//   //   (error) => dispatch({ type: "spots/fetchError", payload: error.message })
-//   // );
-// };
-export const fetchSpots = (payload: ISpot[]) => ({type: 'spots/fetchSpots'})
-export const setSpots = (payload: ISpot[]) => ({type: 'spots/setSpots', payload})
-export const addSpot =
-  (text: string) => (dispatch: any, getState: RootStateOrAny) => {
-    return api.postSpot(text).then(
-      (response) => {
-        dispatch({
-          type: "spots/spotAdded",
-          payload: response,
-        });
-      },
-      (error) => dispatch({ type: "spots/addError", payload: error.message })
-    );
-  };
+export const ADD_SPOT_REQUEST = "spots/addSpotRequest";
+export const ADD_SPOT_SUCCESS = "spots/addSpotSuccess";
+export const ADD_SPOT_FAILURE = "spots/addSpotFailure";

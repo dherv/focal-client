@@ -6,10 +6,10 @@ import { Spot } from './Spot';
 
 const SpotList: FC<{
   spots: ISpot[];
-  error: string
+  error: string;
 }> = ({ spots, error }) => {
-  console.log({spots})
-  if(error) return <p>{error}</p>
+  console.log({ spots, error });
+  if (error) return <p>{error}</p>;
   return (
     <ul>
       {spots.length > 0 && spots.map((s) => <Spot key={s.id} name={s.name} />)}
@@ -20,7 +20,7 @@ const SpotList: FC<{
 const mapStateToProps = (state: RootStateOrAny) => {
   return {
     spots: getAll(state),
-    error: state.spot.error
+    error: state.spot.error,
   };
 };
 

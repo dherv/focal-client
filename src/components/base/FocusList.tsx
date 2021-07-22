@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import { connect, RootStateOrAny } from 'react-redux';
-import { deleteFocus, toggleFocus } from '../../features/focus/focusActions';
+import {
+  DELETE_FOCUS_REQUEST,
+  UPDATE_FOCUS_REQUEST,
+} from '../../features/focus/focusActions';
 import {
   getAllFocuses,
   getCurrentFilter,
@@ -16,13 +19,7 @@ const FocusList: FC<{
   errorMessage: string;
   onFocusClick: (f: IFocus) => void;
   onFocusDelete: (id: string) => void;
-}> = ({
-  focuses,
-  onFocusClick,
-  onFocusDelete,
-  isFetching,
-  errorMessage,
-}) => {
+}> = ({ focuses, onFocusClick, onFocusDelete, isFetching, errorMessage }) => {
   if (isFetching && !focuses.length) {
     return <p>Loading...</p>;
   }
@@ -37,7 +34,7 @@ const FocusList: FC<{
         focuses.map((f) => (
           <Focus
             key={f.id}
-            text={f.text}
+            name={f.name}
             completed={f.completed}
             onClick={() => onFocusClick(f)}
             onDelete={() => onFocusDelete(f.id)}
@@ -57,8 +54,10 @@ const mapStateToProps = (state: RootStateOrAny) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onFocusClick: (f: IFocus) => dispatch(toggleFocus(f)),
-    onFocusDelete: (id: string) => dispatch(deleteFocus(id)),
+    onFocusClick: (focus: IFocus) =>
+      dispatch({ type: UPDATE_FOCUS_REQUEST, payload: focus }),
+    onFocusDelete: (id: string) =>
+      dispatch({ type: DELETE_FOCUS_REQUEST, payload: id }),
   };
 };
 

@@ -19,7 +19,9 @@ const reducer = (
     case FETCH_SPOTS_SUCCESS:
       return {
         ...state,
-        spots: [...state.spots, ...action.payload],
+        error: null,
+        status: "idle",
+        spots: [...action.payload],
       };
     case ADD_SPOT_SUCCESS:
       return {
@@ -27,7 +29,6 @@ const reducer = (
         spots: [...state.spots, action.payload],
       };
     case FETCH_SPOTS_FAILURE:
-      console.log("spot request failed");
       return { ...state, error: action.payload };
     default:
       return state;
@@ -36,4 +37,7 @@ const reducer = (
 
 export default reducer;
 
-export const getAll = (state: RootStateOrAny) => state.spot.spots;
+export const getAll = (state: RootStateOrAny) => {
+  console.log("GETALL", state);
+  return state.spot.spots;
+};
