@@ -24,7 +24,7 @@ const authHandlers = [
       })
     );
   }),
-]
+];
 const focusHandlers = [
   rest.get("/focuses", (req, res, ctx) => {
     return res(
@@ -89,11 +89,11 @@ const sessionHandlers = [
         memo: body.memo,
         rating: body.rating,
         focusId: body.focusId,
+        spotId: body.spotId,
       })
     );
   }),
 ];
-
 
 const spotHandlers = [
   rest.get("/spots", (req, res, ctx) => {
@@ -110,7 +110,6 @@ const spotHandlers = [
         { id: v4(), name: "Beach 3", latitude: 35.2, longitude: 34.2 },
       ])
     );
-    
   }),
 
   rest.post("/spots", (req, res, ctx) => {
@@ -127,4 +126,9 @@ const spotHandlers = [
   }),
 ];
 
-export const handlers = [...authHandlers, ...focusHandlers, ...sessionHandlers, ...spotHandlers];
+export const handlers = [
+  ...authHandlers,
+  ...focusHandlers,
+  ...sessionHandlers,
+  ...spotHandlers,
+];

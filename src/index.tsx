@@ -1,20 +1,32 @@
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './apollo-client';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
 
-if (process.env.NODE_ENV === "development") {
-  const { worker } = require("./mocks/browser");
-  worker.start();
+function prepare() {
+  if (process.env.NODE_ENV === "development") {
+    const { worker } = require("./mocks/browser");
+    return worker.start();
+  }
+  return Promise.resolve();
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App store={store} />
-  </React.StrictMode>,
-  document.getElementById("root")
+prepare().then(() =>
+  ReactDOM.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ApolloProvider>
+    </React.StrictMode>,
+    document.getElementById("root")
+  )
 );
 
 // If you want to start measuring performance in your app, pass a function

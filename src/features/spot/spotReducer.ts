@@ -1,4 +1,9 @@
 import { RootStateOrAny } from 'react-redux';
+import {
+  ADD_SPOT_SUCCESS,
+  FETCH_SPOTS_FAILURE,
+  FETCH_SPOTS_SUCCESS,
+} from '../../actions';
 
 const initialState = {
   spots: [],
@@ -11,17 +16,17 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "spots/setSpots":
+    case FETCH_SPOTS_SUCCESS:
       return {
         ...state,
         spots: [...state.spots, ...action.payload],
       };
-    case "spots/addSpot":
+    case ADD_SPOT_SUCCESS:
       return {
         ...state,
         spots: [...state.spots, action.payload],
       };
-    case "spots/spotRequestFailed":
+    case FETCH_SPOTS_FAILURE:
       console.log("spot request failed");
       return { ...state, error: action.payload };
     default:

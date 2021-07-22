@@ -1,7 +1,6 @@
 import React, { Dispatch, FC, useState } from 'react';
 import { connect } from 'react-redux';
-import { addFocus } from '../../features/focus/focusActions';
-import { ADD_SPOT_REQUEST } from '../../features/spot/spotSaga';
+import { ADD_SPOT_REQUEST } from '../../actions';
 import { TextInput } from './TextInput';
 
 const AddSpot: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
@@ -16,7 +15,7 @@ const AddSpot: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   const handelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (spotText) {
-      dispatch({type: ADD_SPOT_REQUEST, payload: spotText});
+      dispatch({ type: ADD_SPOT_REQUEST, payload: spotText });
     }
     setSpotText("");
   };
@@ -34,10 +33,7 @@ const AddSpot: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
         value={spotText}
         tag="input"
       />
-      <button
-        onClick={handelClick}
-        className="btn"
-      >
+      <button onClick={handelClick} className="btn">
         add
       </button>
     </form>

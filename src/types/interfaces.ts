@@ -16,9 +16,11 @@ export interface ISession {
   memo: string;
   rating: number;
   focusId: string;
+  spotId: string;
   date?: Date;
 }
 
 export interface ISessionEntity extends ISession {
   focus: IFocus;
+  spot: ISpot;
 }

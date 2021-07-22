@@ -1,20 +1,11 @@
 describe("Authentication", () => {
-  const getInputByLabel = (label: string) => {
-    return cy
-      .contains("label", label)
-      .invoke("attr", "for")
-      .then((id) => {
-        cy.get("#" + id);
-      });
-  };
-
   it("Login and Logout flow", () => {
     cy.visit(`/auth`);
 
-    const emailInput = getInputByLabel("email");
+    const emailInput = cy.findByLabelText("email");
     emailInput.type("dherv@gmail.com");
 
-    const password = getInputByLabel("password");
+    const password = cy.findByLabelText("password");
     password.type("password");
 
     cy.contains("button", "login")
@@ -40,13 +31,13 @@ describe("Authentication", () => {
     cy.visit(`/auth`);
     cy.contains("need an account").click();
 
-    const nameInput = getInputByLabel("name");
+    const nameInput = cy.findByLabelText("name");
     nameInput.type("damien");
 
-    const emailInput = getInputByLabel("email");
+    const emailInput = cy.findByLabelText("email");
     emailInput.type("dherv@gmail.com");
 
-    const password = getInputByLabel("password");
+    const password = cy.findByLabelText("password");
     password.type("password");
 
     cy.contains("button", "signup")
