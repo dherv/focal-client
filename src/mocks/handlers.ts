@@ -1,7 +1,30 @@
 // src/mocks/handlers.js
-import { rest } from 'msw';
+import { graphql, rest } from 'msw';
 import { v4 } from 'node-uuid';
 
+const authHandlers = [
+  graphql.mutation("SignUp", (req, res, ctx) => {
+    return res(
+      ctx.data({
+        signup: {
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTYyNDU4MTMxMX0.f3aC_mxlAZjEd2eq0RQdy27bNbcA8Ggn-xV-jmpeoyA",
+        },
+      })
+    );
+  }),
+
+  graphql.mutation("Login", (req, res, ctx) => {
+    return res(
+      ctx.data({
+        login: {
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYyNDU4MTMzOX0.XG1eB2W_DVhXkMLKuCDWcXK4dX_Fwi1DC-hexVKX87M",
+        },
+      })
+    );
+  }),
+]
 const focusHandlers = [
   rest.get("/focuses", (req, res, ctx) => {
     return res(
@@ -104,4 +127,4 @@ const spotHandlers = [
   }),
 ];
 
-export const handlers = [...focusHandlers, ...sessionHandlers, ...spotHandlers];
+export const handlers = [...authHandlers, ...focusHandlers, ...sessionHandlers, ...spotHandlers];
