@@ -7,13 +7,14 @@ import { Session } from './Session';
 const SessionList: FC<{ sessions: ISessionEntity[] }> = ({ sessions }) => {
   return (
     <ul>
-      {sessions.map(({ id, memo, rating, focus }) => (
+      {sessions.map(({ id, memo, rating, focus, spot }) => (
         <Session
           key={id}
           memo={memo}
           rating={rating}
           date="2021/07/01"
           focusName={focus?.text ?? ""}
+          spotName={spot?.name ?? ""}
         />
       ))}
     </ul>

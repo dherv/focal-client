@@ -1,11 +1,4 @@
-import {
-  call,
-  cancelled,
-  fork,
-  put,
-  take,
-  takeLatest,
-} from 'redux-saga/effects';
+import { call, cancelled, fork, put, take } from 'redux-saga/effects';
 import { ApolloQueryResult } from '@apollo/client';
 import { client } from '../../apollo-client';
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from '../../graphql/mutations';

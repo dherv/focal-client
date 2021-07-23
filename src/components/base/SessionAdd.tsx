@@ -1,25 +1,30 @@
 import React, { FC, useState } from 'react';
 import { connect, RootStateOrAny } from 'react-redux';
 import { Dispatch } from 'redux';
+import { ADD_SESSION_REQUEST } from '../../actions';
 import { getAllFocuses } from '../../features/focus/focusReducer';
-import { addSession } from '../../features/session/sessionAction';
-import { IFocus } from '../../types/interfaces';
+import { getAll } from '../../features/spot/spotReducer';
+import { IFocus, ISpot } from '../../types/interfaces';
 import { TextInput } from './TextInput';
 
 const initialState = {
   memo: "",
   rating: 1,
   focusId: undefined,
+  spotId: undefined,
 };
 
-const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
-  dispatch,
-  focuses,
-}) => {
-  const [state, setState] =
-    useState<{ memo: string; rating: number; focusId: string | undefined }>(
-      initialState
-    );
+const SessionAdd: FC<{
+  dispatch: Dispatch<any>;
+  focuses: IFocus[];
+  spots: ISpot[];
+}> = ({ dispatch, focuses, spots }) => {
+  const [state, setState] = useState<{
+    memo: string;
+    rating: number;
+    focusId: string | undefined;
+    spotId?: string;
+  }>(initialState);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -34,10 +39,13 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const { memo, rating, focusId } = state;
+    const { memo, rating, focusId, spotId } = state;
     console.log(memo, rating, focusId);
-    if (memo && rating && focusId) {
-      dispatch(addSession({ memo, rating, focusId }));
+    if (memo && rating && focusId && spotId) {
+      dispatch({
+        type: ADD_SESSION_REQUEST,
+        payload: { memo, rating, focusId, spotId },
+      });
     }
     setState(initialState);
   };
@@ -59,6 +67,7 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
           value={state.rating}
           onChange={handleChange}
           name="rating"
+          placeholder="select a rating"
         >
           <option value="1">1</option>
           <option value="2">2</option>
@@ -71,11 +80,26 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
           value={state.focusId ?? ""}
           onChange={handleChange}
           name="focusId"
+          placeholder="select a focus"
         >
           <option value={undefined}>Please choose a focus</option>
           {focuses.map((focus) => (
             <option key={focus.id} value={focus.id}>
               {focus.text}
+            </option>
+          ))}
+        </select>
+        <select
+          className="block mb-2 w-full shadow-md rounded p-2"
+          value={state.spotId ?? ""}
+          onChange={handleChange}
+          name="spotId"
+          placeholder="select a spot"
+        >
+          <option value={undefined}>Please choose a spot</option>
+          {spots.map((spot: ISpot) => (
+            <option key={spot.id} value={spot.id}>
+              {spot.name}
             </option>
           ))}
         </select>
@@ -90,6 +114,7 @@ const SessionAdd: FC<{ dispatch: Dispatch<any>; focuses: IFocus[] }> = ({
 const mapStateToProps = (state: RootStateOrAny) => {
   return {
     focuses: getAllFocuses(state, "all"),
+    spots: getAll(state),
   };
 };
 

@@ -1,52 +1,53 @@
+import produce, { Draft } from 'immer';
 import { RootStateOrAny } from 'react-redux';
-import { combineReducers } from 'redux';
-import { ISessionEntity } from '../../types/interfaces';
+import { createSelector } from 'reselect';
+import {
+  IFocus,
+  ISession,
+  ISessionEntity,
+  ISpot,
+} from '../../types/interfaces';
 
-const result = (
-  state: RootStateOrAny = [],
+const initialState = {
+  sessions: [],
+};
+
+const reducer = (
+  state: RootStateOrAny = initialState,
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "sessions/fetchSessions":
-      return action.payload.result;
-    case "sessions/addSession":
-      return [...state, action.payload.result];
+    case "sessions/fetchSessionsSuccess":
+      return { ...state, sessions: action.payload };
+    case "sessions/addSessionSuccess":
+      return produce(state, (draft: Draft<any>) => {
+        draft.sessions.push(action.payload);
+      });
     default:
       return state;
   }
 };
-
-const entities = (
-  state: RootStateOrAny = {},
-  action: { type: string; payload: any }
-) => {
-  switch (action.type) {
-    case "sessions/fetchSessions":
-    case "sessions/addSession":
-      return {
-        ...state,
-        ...action.payload.entities.sessions,
-      };
-    default:
-      return state;
-  }
-};
-
-const reducer = combineReducers({
-  entities,
-  result,
-});
 
 export default reducer;
 
-export const getAllSessions = (state: RootStateOrAny) => {
-  const ids = state.session.result;
-  const focuses = state.focus.byId;
-  const entities = ids.map((id: number) => ({
-    ...state.session.entities[id],
-    focus: focuses[state.session.entities[id].focusId],
-  })).filter((s: ISessionEntity) => s.focus)
+export const getAllSessions = createSelector(
+  (state: RootStateOrAny) => state.session.sessions,
+  (state: RootStateOrAny) =>
+    Object.entries(state.focus.byId).map(([key, value]) => value) as IFocus[],
+  (state: RootStateOrAny) => state.spot.spots,
+  (sessions, focuses, spots) => {
+    console.log(sessions);
+    return sessions.map((session: ISession): ISessionEntity => {
+      const focus = focuses.filter(
+        (focus: IFocus) => focus.id === session.focusId
+      )[0];
 
-  console.log(entities)
-  return entities;
-};
+      const spot = spots.filter((s: ISpot) => {
+        console.log(session.spotId, s.id);
+        return s.id === session.spotId;
+      })[0];
+
+      return { ...session, focus, spot };
+    });
+  }
+);
