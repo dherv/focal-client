@@ -13,7 +13,7 @@ const SessionList: FC<{ sessions: ISessionEntity[] }> = ({ sessions }) => {
           memo={memo}
           rating={rating}
           date="2021/07/01"
-          focusName={focus?.text ?? ""}
+          focusName={focus?.name ?? ""}
           spotName={spot?.name ?? ""}
         />
       ))}

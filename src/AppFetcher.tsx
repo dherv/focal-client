@@ -1,7 +1,10 @@
 import { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { FETCH_SESSIONS_REQUEST, FETCH_SPOTS_REQUEST } from './actions';
-import { fetchFocuses } from './features/focus/focusActions';
+import {
+  FETCH_FOCUSES_REQUEST,
+  FETCH_SESSIONS_REQUEST,
+  FETCH_SPOTS_REQUEST,
+} from './actions';
 
 const AppFetcher: FC<{
   fetchFocuses: () => Promise<any>;
@@ -19,7 +22,7 @@ const AppFetcher: FC<{
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchFocuses: () => dispatch(fetchFocuses),
+    fetchFocuses: () => dispatch({ type: FETCH_FOCUSES_REQUEST }),
     fetchSessions: () => dispatch({ type: FETCH_SESSIONS_REQUEST }),
     fetchSpots: () => dispatch({ type: FETCH_SPOTS_REQUEST }),
   };

@@ -85,7 +85,7 @@ const SessionAdd: FC<{
           <option value={undefined}>Please choose a focus</option>
           {focuses.map((focus) => (
             <option key={focus.id} value={focus.id}>
-              {focus.text}
+              {focus.name}
             </option>
           ))}
         </select>

@@ -12,6 +12,7 @@ export function* handleGetSpots(): any {
     const response = yield call(api.fetchSpots);
     yield put({ type: FETCH_SPOTS_SUCCESS, payload: response });
   } catch (error) {
+    console.error(error);
     yield put({
       type: FETCH_SPOTS_FAILURE,
       payload: "failed to fetch spots",
@@ -21,7 +22,7 @@ export function* handleGetSpots(): any {
 
 export function* handleAddSpot(action: any): any {
   try {
-    const response = yield call(api.postSpot as any, action.payload);
+    const response = yield call(api.postSpot, action.payload);
     yield put({ type: ADD_SPOT_SUCCESS, payload: response });
   } catch (e) {
     console.error(e);

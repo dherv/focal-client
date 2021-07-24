@@ -1,6 +1,6 @@
 export interface IFocus {
   id: string;
-  text: string;
+  name: string;
   completed: boolean;
 }
 
@@ -18,6 +18,8 @@ export interface ISession {
   focusId: string;
   spotId: string;
   date?: Date;
+  spot: ISpot;
+  focus?: IFocus;
 }
 
 export interface ISessionEntity extends ISession {

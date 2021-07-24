@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, useState } from 'react';
 import { connect } from 'react-redux';
-import { addFocus } from '../../features/focus/focusActions';
+import { ADD_FOCUS_REQUEST } from '../../actions';
 import { TextInput } from './TextInput';
 
 const AddFocus: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
@@ -15,7 +15,7 @@ const AddFocus: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   const handelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (focusText) {
-      dispatch(addFocus(focusText));
+      dispatch({ type: ADD_FOCUS_REQUEST, payload: focusText });
     }
     setFocusText("");
   };
@@ -33,10 +33,7 @@ const AddFocus: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
         value={focusText}
         tag="input"
       />
-      <button
-        onClick={handelClick}
-        className="btn"
-      >
+      <button onClick={handelClick} className="btn">
         add
       </button>
     </form>

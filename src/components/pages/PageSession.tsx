@@ -2,8 +2,7 @@ import { FC } from 'react';
 import AddSession from '../base/SessionAdd';
 import SessionList from '../base/SessionList';
 
- const PageSession : FC = () => {
-
+const PageSession: FC = () => {
   return (
     <section>
       <h4 className="text-sm font-thin mb-2">add a session</h4>
@@ -16,4 +15,4 @@ import SessionList from '../base/SessionList';
   );
 };
 
-export default PageSession
+export default PageSession;

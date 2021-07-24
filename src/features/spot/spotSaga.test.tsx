@@ -12,9 +12,7 @@ describe("fetch spots", () => {
   test("should call fetchspot and add the spots to the reducer", () => {
     const iterator = handleGetSpots();
     expect(iterator.next().value).toStrictEqual(call(fetchSpots));
-    expect(iterator.next().value).toStrictEqual(
-      put({ type: FETCH_SPOTS_SUCCESS, payload: undefined })
-    );
+    expect(iterator.next().value).toEqual(put({ type: FETCH_SPOTS_SUCCESS }));
     expect(iterator.next()).toEqual({ done: true });
   });
 
