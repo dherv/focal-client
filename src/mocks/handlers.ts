@@ -53,6 +53,42 @@ let sessions = [
   },
 ];
 
+const user = {
+  id: "1",
+  name: "damien",
+  email: "damien@test.com",
+  avatar: "http://placeimg.com/640/480",
+  focuses: [
+    {
+      name: "Take Off",
+      id: "1",
+      completed: false,
+    },
+  ],
+  spots: [
+    {
+      name: "Beach 1",
+      id: "1",
+      latitude: 35.59,
+      longitude: 134.82,
+    },
+  ],
+  sessions: [
+    {
+      memo: "Good Session",
+      rating: 4,
+      spot: {
+        id: "1",
+        name: "Beach 1",
+      },
+      focus: {
+        id: "1",
+        name: "Take Off",
+      },
+    },
+  ],
+};
+
 const authHandlers = [
   graphql.mutation("SignUp", (req, res, ctx) => {
     return res(
@@ -76,6 +112,17 @@ const authHandlers = [
     );
   }),
 ];
+
+const userHandlers = [
+  graphql.query("FetchUser", (req, res, ctx) => {
+    return res(
+      ctx.data({
+        user,
+      })
+    );
+  }),
+];
+
 const focusHandlers = [
   graphql.query("FetchFocuses", (req, res, ctx) => {
     return res(
@@ -168,6 +215,7 @@ const spotHandlers = [
 
 export const handlers = [
   ...authHandlers,
+  ...userHandlers,
   ...focusHandlers,
   ...sessionHandlers,
   ...spotHandlers,

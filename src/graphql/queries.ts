@@ -38,3 +38,37 @@ export const FETCH_SESSIONS_QUERY = gql`
     }
   }
 `;
+
+export const FETCH_USER_QUERY = gql`
+  query FetchUser {
+    user {
+      id
+      name
+      email
+      avatar
+      focuses {
+        name
+        id
+        completed
+      }
+      spots {
+        name
+        id
+        latitude
+        longitude
+      }
+      sessions {
+        memo
+        rating
+        spot {
+          id
+          name
+        }
+        focus {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
