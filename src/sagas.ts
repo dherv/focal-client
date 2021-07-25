@@ -22,10 +22,13 @@ import {
   handleFetchSessions,
 } from './features/session/sessionSaga';
 import { handleAddSpot, handleGetSpots } from './features/spot/spotSaga';
+import { FETCH_USER_REQUEST } from './features/user/userAction';
+import { handleGetUser } from './features/user/userSaga';
 
 export function* watcherSaga(): any {
   yield fork(loginFlow);
   yield fork(signupFlow);
+  yield takeLatest(FETCH_USER_REQUEST, handleGetUser);
   yield takeLatest(FETCH_SPOTS_REQUEST, handleGetSpots);
   yield takeLatest(ADD_SPOT_REQUEST, handleAddSpot);
   yield takeLatest(FETCH_SESSIONS_REQUEST, handleFetchSessions);
