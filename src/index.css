@@ -6,8 +6,16 @@
 .form-element {
   @apply w-full border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent rounded mr-3 shadow-md px-3 py-1 text-gray-600 placeholder-gray-400;
 }
+.btn-base {
+  @apply px-3 py-1 rounded text-gray-100 text-sm focus:outline-none focus:ring-2  focus:ring-opacity-50;
+}
 .btn {
-  @apply bg-indigo-600 px-3 py-1 rounded text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50;
+  @apply btn-base;
+  @apply bg-indigo-600 focus:ring-indigo-600 !important;
+}
+.btn-light {
+  @apply btn-base;
+  @apply bg-indigo-400 focus:ring-indigo-400 !important;
 }
 .list-item {
   @apply flex justify-between items-center mb-2 text-sm text-gray-600;
@@ -15,4 +23,3 @@
 .list-item-content {
   @apply rounded flex flex-grow justify-between cursor-pointer hover:bg-indigo-100 bg-white shadow-md p-2 select-none;
 }
-
