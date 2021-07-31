@@ -13,6 +13,7 @@ export const Header = () => {
         <NavLink to="/spots">spots</NavLink>
         <NavLink to="/sessions">sessions</NavLink>
         <NavLink to="/focuses">focuses</NavLink>
+        <NavLink to="/profile">profile</NavLink>
         <button
           onClick={() => dispatch({ type: "LOGOUT", payload: { history } })}
         >
