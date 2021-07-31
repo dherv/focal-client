@@ -26,3 +26,8 @@ export interface ISessionEntity extends ISession {
   focus: IFocus;
   spot: ISpot;
 }
+
+export interface IUser {
+  name: string;
+  email: string;
+}

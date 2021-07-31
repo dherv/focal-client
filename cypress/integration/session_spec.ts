@@ -1,7 +1,7 @@
 describe("Sessions", () => {
   beforeEach(() => cy.visit("/sessions"));
   it("should fetch the sessions", () => {
-    cy.contains("Good session");
+    cy.contains("Good Session");
   });
   it("should add a session to the list", () => {
     cy.createSession("new session");
