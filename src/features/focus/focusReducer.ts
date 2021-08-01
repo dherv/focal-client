@@ -66,7 +66,7 @@ const result = (state = [], action: any) => {
         if (deleteIndex !== -1) draft.splice(deleteIndex, 1);
         return;
       default:
-        return state;
+        return draft;
     }
   });
 };

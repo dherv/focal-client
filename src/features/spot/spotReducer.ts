@@ -1,3 +1,4 @@
+import produce, { Draft } from 'immer';
 import { RootStateOrAny } from 'react-redux';
 import {
   ADD_SPOT_SUCCESS,
@@ -15,24 +16,23 @@ const reducer = (
   state: RootStateOrAny = initialState,
   action: { type: string; payload: any }
 ) => {
-  switch (action.type) {
-    case FETCH_SPOTS_SUCCESS:
-      return {
-        ...state,
-        error: null,
-        status: "idle",
-        spots: [...action.payload],
-      };
-    case ADD_SPOT_SUCCESS:
-      return {
-        ...state,
-        spots: [...state.spots, action.payload],
-      };
-    case FETCH_SPOTS_FAILURE:
-      return { ...state, error: action.payload };
-    default:
-      return state;
-  }
+  return produce(state, (draft: Draft<any>) => {
+    switch (action.type) {
+      case FETCH_SPOTS_SUCCESS:
+        draft.spots = action.payload;
+        draft.error = null;
+        return;
+      case ADD_SPOT_SUCCESS:
+        draft.spots.push(action.payload);
+        return;
+      case FETCH_SPOTS_FAILURE:
+        draft.spots = [];
+        draft.error = action.payload;
+        return;
+      default:
+        return draft;
+    }
+  });
 };
 
 export default reducer;
