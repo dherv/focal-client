@@ -11,8 +11,7 @@ type Props = {
   tag: "textarea" | "input";
 };
 
-const Element: FC<any> = (props) =>
-  React.createElement(props.tag, props) as React.ReactElement;
+const Element: FC<any> = (props) => React.createElement(props.tag, props);
 
 export const TextInput: FC<Props> = ({
   onChange,

@@ -1,14 +1,15 @@
 import { call, put } from 'redux-saga/effects';
-import { ADD_SESSION_FAILURE, ADD_SESSION_SUCCESS } from '../../actions';
+import {
+  ADD_SESSION_FAILURE,
+  ADD_SESSION_SUCCESS,
+  sessionSuccess,
+} from '../../actions';
 import * as api from './sessionApi';
 
 export function* handleFetchSessions(): any {
   try {
     const payload = yield call(api.fetchSessions);
-    yield put({
-      type: "sessions/fetchSessionsSuccess",
-      payload,
-    });
+    yield put(sessionSuccess(payload));
   } catch (e) {
     yield put({
       type: "sessions/fetchSessionsFailure",
@@ -19,7 +20,7 @@ export function* handleFetchSessions(): any {
 
 export function* handleAddSession(action: any): any {
   try {
-    const response = yield call(api.postSession as any, action.payload);
+    const response = yield call(api.postSession, action.payload);
     yield put({
       type: ADD_SESSION_SUCCESS,
       payload: response,

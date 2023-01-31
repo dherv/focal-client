@@ -57,7 +57,7 @@ const user = {
   id: "1",
   name: "damien",
   email: "damien@test.com",
-  avatar: "http://placeimg.com/640/480",
+  avatar: "https://placeimg.com/640/480",
   focuses: [
     {
       name: "Take Off",
@@ -133,9 +133,10 @@ const focusHandlers = [
   }),
 
   graphql.mutation("AddFocus", (req, res, ctx) => {
-    const body = req.body as any;
+    const body: any = req.body;
     const newFocus = { id: v4(), name: body.variables.name, completed: false };
     focuses = [...focuses, newFocus];
+    console.log({ focuses });
     return res(
       ctx.data({
         focus: newFocus,
@@ -144,7 +145,7 @@ const focusHandlers = [
   }),
 
   graphql.mutation("UpdateFocus", (req, res, ctx) => {
-    const { id, name, completed } = req.body?.variables as any;
+    const { id, name, completed }: any = req.body?.variables;
     const toggleCompleted = !completed;
     console.log(id, completed, toggleCompleted);
     return res(
@@ -155,7 +156,7 @@ const focusHandlers = [
   }),
 
   graphql.mutation("DeleteFocus", (req, res, ctx) => {
-    const { id, name, completed } = req.body?.variables as any;
+    const { id, name, completed }: any = req.body?.variables;
     return res(
       ctx.data({
         deleteFocus: { id, name, completed },
@@ -174,7 +175,7 @@ const sessionHandlers = [
   }),
 
   graphql.mutation("AddSession", (req, res, ctx) => {
-    const body = req.body?.variables as any;
+    const body: any = req.body?.variables;
     const focus = focuses.find((f) => f.id === body.focusId);
     const spot = spots.find((s) => s.id === body.spotId);
     return res(
@@ -201,7 +202,7 @@ const spotHandlers = [
   }),
 
   graphql.mutation("AddSpot", (req, res, ctx) => {
-    const body = req.body?.variables as any;
+    const body: any = req.body?.variables ;
     const newSpot = {
       id: body.id,
       name: body.name,
